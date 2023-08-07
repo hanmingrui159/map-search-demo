@@ -285,7 +285,7 @@ const getLocalTime = (lat, lng) => {
                 year: '2-digit',
                 month: '2-digit',
                 day: '2-digit'
-            }).replace(/(\d{2})\/(\d{2})\/(\d{2})/, "$3/$1/$2") + ' ' + localDateTime.toLocaleTimeString('en-Gb', {
+            }).replace(/(\d{2})\/(\d{2})\/(\d{2})/, "$3/$2/$1") + ' ' + localDateTime.toLocaleTimeString('en-Gb', {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
