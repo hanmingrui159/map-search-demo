@@ -275,12 +275,14 @@ const getLocalTime = (lat, lng) => {
             const timeZoneOffset = timezoneData.dstOffset * 1000 + timezoneData.rawOffset * 1000;
             const localDateTime = new Date(localT + timeZoneOffset + currentTimeZoneOffsetInMS);
 
+            // localDateTime.setHours(localDateTime.getHours() % 24); # WARNING: gpt4 isn't able to figure this out
+
             timezone.value = result.data.timeZoneName
-            localTime.value = localDateTime.toLocaleDateString(undefined, {
+            localTime.value = localDateTime.toLocaleDateString('en-Gb', {
                 year: '2-digit',
                 month: '2-digit',
                 day: '2-digit'
-            }).replace(/(\d{2})\/(\d{2})\/(\d{2})/, "$3/$1/$2") + ' ' + localDateTime.toLocaleTimeString(undefined, {
+            }).replace(/(\d{2})\/(\d{2})\/(\d{2})/, "$3/$1/$2") + ' ' + localDateTime.toLocaleTimeString('en-Gb', {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
