@@ -88,6 +88,8 @@
 import { onMounted, computed, ref } from 'vue'
 import axios from "axios";
 
+onMounted(() => console.log(process.env.API_KEY))
+
 const lat = ref('')
 const lng = ref('')
 const myAddress = ref('')
@@ -178,6 +180,7 @@ onMounted(() => {
     setInterval(updateTime, 1000);
 })
 
+
 // onMounted(() => {
 //     autocomplete.value.addListener('place_changed', () => {
 //         let place = autocomplete.value.getPlace();
@@ -264,7 +267,7 @@ const updateTime = () => {
 }
 
 const getLocalTime = (lat, lng) => {
-    axios.get(`https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${Math.floor(Date.now() / 1000)}&key=AIzaSyB3pkQRsODKcVU2tSjlL2Yw5lrQicvReMY`)
+    axios.get(`https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${Math.floor(Date.now() / 1000)}&key=${process.env.API_KEY}`)
         .then(result => {
             const timezoneData = result.data
 
