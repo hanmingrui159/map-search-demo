@@ -2,7 +2,10 @@
 
 A Quasar Project
 
+## Set up the environment variable
+
 Replace the API Key in **quasar.config.js** file from 
+
         **env:{API_KEY:'123'}**,
 
 to
