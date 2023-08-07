@@ -247,10 +247,8 @@ const getLocation = () => {
                     position.coords.longitude
                 );
             },
-            (error) => {
-                console.log("An error happened!");
-                console.log(error.message);
-                error.value = error.message;
+            (err) => {
+                error.value = err.message;
             }
         );
     } else {
@@ -293,9 +291,8 @@ const getLocalTime = (lat, lng) => {
             // alert(result.data.timeZoneName)
 
         })
-        .catch((error) => {
-            console.log(error.message);
-            error.value = error.message;
+        .catch((err) => {
+            error.value = err.message;
         });
 }
 
@@ -311,7 +308,6 @@ const getAddressFrom = (lat, long) => {
         )
         .then((response) => {
             if (response.data.error_message) {
-                console.log(response.data.error_message);
                 error.value = response.data.error_message;
             } else {
                 console.log(response.data.results[0].formatted_address);
