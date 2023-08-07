@@ -7,8 +7,6 @@ Replace the API Key in **quasar.config.js** file from
         ...
 
 to
-
-build: 
         **env:{API_KEY:'[API Key attached in email]'}**,
         ...
 
