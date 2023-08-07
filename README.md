@@ -3,17 +3,14 @@
 A Quasar Project
 
 Replace the API Key in **quasar.config.js** file from 
-build: {
         **env:{API_KEY:'123'}**,
         ...
-        }
 
 to
 
-build: {
+build: 
         **env:{API_KEY:'[API Key attached in email]'}**,
         ...
-        }
 
 ## Install the dependencies
 ```bash
