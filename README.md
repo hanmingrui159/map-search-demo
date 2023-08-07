@@ -2,16 +2,16 @@
 
 A Quasar Project
 
-Replace the API Key in #quasar.config.js# file from 
+Replace the API Key in **quasar.config.js** file from 
 build: {
-        env:{API_KEY:'123'},
+        **env:{API_KEY:'123'}**,
         ...
         }
 
 to
 
 build: {
-        env:{API_KEY:'[API Key attached in email]'},
+        **env:{API_KEY:'[API Key attached in email]'}**,
         ...
         }
 
