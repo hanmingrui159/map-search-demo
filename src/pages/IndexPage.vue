@@ -3,28 +3,24 @@
 
         <q-page-container>
             <q-page class="items-center">
+                <!-- Title -->
                 <div class="title text-h2">Map Search</div>
 
+                <!-- Error Notifications -->
                 <q-card-section>
                     <q-banner v-if="error" inline-actions class="text-white bg-red">
                         {{ error }}
                     </q-banner>
 
-
                     <div>
                     </div>
                 </q-card-section>
 
-                <!-- New Card -->
-
+                <!-- Find My Location -->
                 <q-card class="my-card" flat bordered>
                     <q-card-section horizontal>
                         <q-card-section class="q-pt-xs">
                             <div class="text-h5 q-mt-sm q-mb-xs">Your location</div>
-                            <!-- <div class="text-caption text-grey">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua.
-                            </div> -->
                             <div class="text-caption text-grey"> {{ myAddress }}</div>
 
                         </q-card-section>
@@ -39,11 +35,10 @@
                     </q-card-actions>
                 </q-card>
 
+                <!-- Map Search -->
                 <form @submit.prevent="submitTask">
                     <q-input ref="autocompleteInput" outlined type="text" v-model="searchAddress"
                         placeholder="Enter your address:" class="q-my-sm" id="autocomplete">
-                        <!-- @keydown.enter="submitTask" -->
-
                         <template v-slot:append>
                         </template>
                     </q-input>
@@ -60,20 +55,12 @@
 
                     </q-card>
                 </q-card-section>
-                <!-- <p class="mt-3"></p> -->
                 <!-- Google Map -->
-                <!-- <q-card-section> -->
                 <div id="map"></div>
-                <!-- </q-card-section> -->
 
-
-
-
+                <!-- Search Logs + Batch Delete -->
                 <q-btn class="flex-center" color="white" text-color="black" label="Delete Selected"
                     @click="deleteSelected" />
-
-                <!-- Button is now right before the table -->
-
                 <q-table v-model:selected="selected" row-key="name" :rows-per-page-options="[10]" :rows="searchLogs"
                     selection="multiple">
                 </q-table>
@@ -90,23 +77,18 @@ import axios from "axios";
 
 onMounted(() => console.log(process.env.API_KEY))
 
+const error = ref('');
+
 const lat = ref('')
 const lng = ref('')
 const myAddress = ref('')
 const searchAddress = ref('')
-const error = ref('');
 
 const geocoder = ref();
-
 const timezone = ref('');
 const localTime = ref('');
-const autocomplete = ref();
-
-// currentPage = 1
-// perPage = 10
 
 const selected = ref([])
-
 let searchLogs = ref([
     {
         name: "Sample Search Log 1",
@@ -161,48 +143,9 @@ let searchLogs = ref([
     }
 ])
 
-
-const pagesNumber = computed(() => {
-    return Math.ceil(this.rows.length / this.pagination.rowsPerPage)
-})
-
-const numberOfPages = computed(() => {
-    return Math.ceil(this.searchLogs.length / this.perPage);
-})
-
-const paginatedData = computed(() => {
-    const start = (this.currentPage - 1) * this.perPage;
-    const end = start + this.perPage;
-    return this.searchLogs.slice(start, end);
-})
-
 onMounted(() => {
     setInterval(updateTime, 1000);
 })
-
-
-// onMounted(() => {
-//     autocomplete.value.addListener('place_changed', () => {
-//         let place = autocomplete.value.getPlace();
-
-//         if (place.geometry) {
-//             // Place details fetched successfully. Update your data property.
-//             searchAddress.value = place.formatted_address;
-//         } else {
-//             // No details fetched for the selected place. Clear your data property.
-//             searchAddress.value = '';
-//         }
-//     });
-// })
-
-
-// onMounted(() => {
-//     this.$nextTick(() => {
-//         let input = this.$refs.autocompleteInput.$el.getElementsByTagName('input')[0];
-
-//         new google.maps.places.Autocomplete(input);
-//     });
-// })
 
 const deleteSelected = () => {
     console.log("triggered")
@@ -218,7 +161,7 @@ const capitalizeFirstChar = (str) => {
 }
 
 /**
- * Add / Update task
+ * Add New Search Log
  */
 const submitTask = () => {
     if (searchAddress.value.length === 0) return;
@@ -226,7 +169,7 @@ const submitTask = () => {
     // geocode location and show on map
     myGeocode(searchAddress.value)
 
-    /* We need to add new task */
+    /* We need to add new log */
     searchLogs.value.push({
         name: searchAddress.value,
         selected: false
@@ -291,10 +234,6 @@ const getLocalTime = (lat, lng) => {
                 second: '2-digit',
                 hour12: false
             });
-
-            // alert(this.localTime)
-            // alert(result.data.timeZoneName)
-
         })
         .catch((err) => {
             error.value = err.message;
@@ -355,15 +294,11 @@ const myGeocode = (query) => {
             lng.value = results[0].geometry.location.lng()
             showUserLocationOnTheMap(results[0].geometry.location.lat(), results[0].geometry.location.lng())
             getLocalTime(results[0].geometry.location.lat(), results[0].geometry.location.lng())
-            // add to search history
-            // this.searchLogs.push()
         })
         .catch((e) => {
             alert("Geocode was not successful for the following reason: " + e);
         });
 }
-
-
 </script>
 
 
@@ -386,10 +321,6 @@ const myGeocode = (query) => {
     user-select: none;
     /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-}
-
-.line-through {
-    text-decoration: line-through;
 }
 
 #map {
